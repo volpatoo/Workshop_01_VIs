@@ -500,7 +500,7 @@ system.time(
     #i.h<-aggregate(stack(imgFiles[k]), fact=aggregateCells) to reduce the image size if the case
     i.h <-  stack(imgFiles[i])
    
-    for(v in 1:length(myIndex_list)){ #loop through VIs
+    for(v in 1:2){ #loop through two VIs only
   
       message("Using VI: ",paste(myIndex_list_name[v]))
       

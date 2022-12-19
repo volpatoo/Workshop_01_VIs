@@ -1,0 +1,52 @@
+## Vegetation index to compose the loop using the RGB images
+fieldIndex
+Ind <- read.csv(file = system.file("extdata", "Indices.txt", 
+                                   package = "FIELDimageR", mustWork = TRUE), header = TRUE, 
+                sep = "\t")
+
+myIndex_list=list(
+          "sqrt((Red^2+Green^2+Blue^2)/3)"->BI,
+          "sqrt((Red*2+Green*2+Blue*2)/3)"->BIM,
+          "(Red-Green)/(Red+Green)"->SCI,
+          "(2*Green-Red-Blue)/(2*Green+Red+Blue)"->GLI,
+          "(2*Red-Green-Blue)/(Green-Blue)"->HI,
+          "(Green-Red)/(Green+Red)"->NGRDI,
+          " (Red-Blue)/(Red+Blue)"->SI,
+          "(Green-Red)/(Green+Red-Blue)"->VARI,
+          "atan(2*(Blue-Green-Red)/30.5*(Green-Red))"->HUE,
+          "Blue/Green"->BdivG,
+          "(Blue/(Red+Green+Blue))"->BCC,
+          "((0.441*Red)-(0.811*Green)+(0.385*Blue)+18.78745)"->CIVE,
+          "(((2*Green)-Red-Blue)+((0.441*Red)-(0.811*Green)+(0.385*Blue)+18.78745)+((3*Green)-(2.4*Red)-Blue)+(Green/(Red^0.667*Blue^0.334)))"->COM1,
+          "((0.36*((2*Green)-Red-Blue))+(0.47*((0.441*Red)-(0.811*Green)+(0.385*Blue)+18.78745))+(0.17*(Green/(Red^0.667*Blue^0.334))))"->COM2,
+          "((2*Green)-Red-Blue)"->ExG,
+          "(((2*Green)-Red-Blue)/(Red+Green+Blue))"->ExG2,
+          "((3*Green)-(2.4*Red)-Blue)"->ExGR,
+          "((1.4*Red)-Green)"->EXR,
+          "(Green-Blue)"->GmnB,
+          "(Green-Red)"->GmnR,
+          "(Green/Blue)"->GdivB,
+          "(Green/Red)"->GdivR,
+          "(Green/(Red+Green+Blue))"->GCC,
+          "((1.262*Green)-(0.884*Red)-(0.311*Blue))"->MExG,
+          "((Green^2)-(Red^2))/((Green^2)+(Red^2))"->MGVRI,
+          "128*(((Green-Red)/(Green+Red))+1)"->NDI,
+          "(Red-Blue)/(Red+Blue)"->NDRBI,
+          "(Green-Blue)/(Green+Blue)"->NGBDI,
+          "(Red-Blue)"->RmnB,
+          "(Red/Blue)"->RdiB,
+          "(Red/(Red+Green+Blue))"->RCC,
+          "(Red^3/(Red+Green+Blue))"->MRCCbyAlper,
+          "(((Green^2)-(Red*Blue))/((Green^2)+(Red*Blue)))"->RGBVI,
+          "(Green-((0.39*Red)-(0.69*Blue)))"->TGI,
+          "Green/(Red^0.667*Blue^0.334)"->VEG,
+          "((Red-Blue)/Green)"->MyIndexi,
+          "sqrt(Green/Red)"->MSRGR,
+          "sqrt((Green-Red)/(Green+Red)+0.5)"->TNDGR)
+          
+ myIndex_list_name=list('BI','BIM','SCI','GLI','HI','NGRDI','SI','VARI','HUE','BdivG',
+                        'BCC','CIVE','COM1','COM2','ExG','ExG2','ExGR','EXR',
+                        'GmnB','GmnR','GdivB','GdivR','GCC','MExG','MGVRI',
+                        'NDI','NDRBI','NGBDI','RmnB','RdiB','RCC','MRCCbyAlper',
+                        'RGBVI','TGI','VEG','MyIndexi','MSRGR','TNDGR')
+ 

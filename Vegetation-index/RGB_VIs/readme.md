@@ -1,19 +1,32 @@
 
-# About this analysis 
 
-The present analysis aims to perform the VIs extractions from the RGB images aka orthomosaic.\n
-Data source: Dry Beans Breeding Program - MSU. \n
+## Vegetation index (VI) extractions using RGB orthomosaic images</p></p>
+Author: Leonardo Volpato</p>
+Date: Last compiled on 16 December, 2022</p>
+
+---------------------------------------------
+
+### About this analysis 
+
+The present analysis aims to perform the VIs extractions from the RGB images aka orthomosaic. </p>
+Data source: Dry Beans Breeding Program - MSU. </p>
 Principal Investigator: [Dr. Francisco Gomez](https://www.canr.msu.edu/people/francisco-gomez) 
 
+
+<p align="center">
+    <img src="https://github.com/volpatoo/Workshop_01_VIs/blob/0d63630f3e11149279d07d7e858740bdc5ca2fa1/Pipeline_RGB_VIs2.jpg" width="100%" height="100%">
+</p>
+
+---------------------------------------------
 
 ---------------------------------------------
 
 ## Resources
 
-* [Basic pipeline](#pipeVI)
-* [Getting started - Complete data set](#startdata)
-   * [Running the loops](#Runloop)
-   * [Adjusting the results and saving](#savingdata)
+* [Basic pipeline]
+* [Getting started - Complete data set]
+   * [Running the loops]
+   * [Adjusting the results and saving]
 
 
 ---------------------------------------------

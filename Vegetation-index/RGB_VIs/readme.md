@@ -14,7 +14,7 @@ Principal Investigator: [Dr. Francisco Gomez](https://www.canr.msu.edu/people/fr
 
 
 <p align="center">
-    <img src="https://github.com/volpatoo/Workshop_01_VIs/blob/0d63630f3e11149279d07d7e858740bdc5ca2fa1/Pipeline_RGB_VIs2.jpg" width="100%" height="100%">
+    <img src="https://github.com/volpatoo/Workshop_01_VIs/blob/c3dba0ca5c16fa5ebf650592afc8bc07e0417b99/Pipeline_RGB_VIs2.jpg" width="100%" height="100%">
 </p>
 
 ---------------------------------------------

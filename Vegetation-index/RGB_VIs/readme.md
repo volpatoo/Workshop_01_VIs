@@ -19,14 +19,16 @@ Principal Investigator: [Dr. Francisco Gomez](https://www.canr.msu.edu/people/fr
 
 ---------------------------------------------
 
+<div id="menu" />
 ---------------------------------------------
 
 ## Resources
 
-* [Basic pipeline]
-* [Getting started - Complete data set]
-   * [Running the loops]
-   * [Adjusting the results and saving]
+* [Basic pipeline](#pipe)
+* [Getting started - Complete data set](#start)
+   * [Running the loops](#loops)
+   * [Adjusting the results and saving](#adj)
+   
 
 
 ---------------------------------------------
@@ -79,6 +81,8 @@ setwd(my.path)
 ```
 
 
+<div id="pipe" />
+---------------------------------------------
 # Basic pipeline
 
 ## Setting the work directories
@@ -385,6 +389,9 @@ fieldPlot(fieldShape=ortho.Info1$fieldShape,fieldAttribute="GLI", mosaic=Veg.Ind
 
 ---------------------------------------------
 
+<div id="start" />
+---------------------------------------------
+
 ## Getting started - Complete data set
 
 This code will run across of 4 type of loops:
@@ -536,6 +543,8 @@ getDoParWorkers()
 #> [1] 12
 ```
 
+<div id="loops" />
+---------------------------------------------
 
 ## Running the loops
 
@@ -621,7 +630,8 @@ parallel::stopCluster(cl) # Stopping the parallel function
 ```
 
 
-
+<div id="adj" />
+---------------------------------------------
 ## Adjusting the results and saving
 
 

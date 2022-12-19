@@ -2,3 +2,6 @@
 .Rhistory
 .RData
 .Ruserdata
+.VI_data_GLI.csv
+.Rplots.pdf
+.test01_MRF_RGB.csv

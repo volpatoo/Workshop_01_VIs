@@ -26,4 +26,6 @@ install.packages("pacman")
 install.packages("DT")
 BiocManager::install("EBImage")
 install.packages("git2r")
+install.packages("tidyr")
+
 devtools::install_github("filipematias23/FIELDimageR", dependencies=FALSE)

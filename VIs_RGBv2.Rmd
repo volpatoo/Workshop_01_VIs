@@ -65,10 +65,11 @@ library("BiocManager")
 library("EBImage")
 library("FIELDimageR")
 library("dplyr")
+library("tidyr")
 
 
 #install.packages("tidyr")
-#library("tidyr")
+
 # BiocManager::install("EBImage")
 # install.packages("git2r")
 # devtools::install_github("filipematias23/FIELDimageR", dependencies=FALSE)

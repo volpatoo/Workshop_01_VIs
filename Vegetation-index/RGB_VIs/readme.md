@@ -1,38 +1,5 @@
----
-title: "Vegetation index (VI) extractions using RGB orthomosaic images"
-author: "Leonardo Volpato"
-date: "Last compiled on 19 December, 2022"
-output:
-  html_document:
-    keep_md: yes
-    #number_sections: true
-    theme: cerulean
-    highlight: pygments
-    toc: yes
-    toc_depth: 3
-    toc_float: yes
-    number_sections: yes
-    df_print: kable
-    code_folding: hide
-    code_download: yes
-  rmarkdown::html_vignette:
-    toc: yes
-    toc_depth: 3
-  pdf_document:
-    toc: yes
-    number_sections: yes
-    toc_depth: '4'
-    latex_engine: xelatex
-fig_caption: yes
-link-citations: true
-#classoption: a4paper
----
 
-
-
-
-
-# About this analysis {-}
+# About this analysis 
 
 The present analysis aims to perform the VIs extractions from the RGB images aka orthomosaic.\n
 Data source: Dry Beans Breeding Program - MSU. \n
@@ -41,7 +8,7 @@ Principal Investigator: [Dr. Francisco Gomez](https://www.canr.msu.edu/people/fr
 
 ---------------------------------------------
 
-## Resources{-}
+## Resources
 
 * [Basic pipeline](#pipeVI)
 * [Getting started - Complete data set](#startdata)
@@ -52,7 +19,7 @@ Principal Investigator: [Dr. Francisco Gomez](https://www.canr.msu.edu/people/fr
 ---------------------------------------------
 
 
-## Setting up the working directory {-} 
+## Setting up the working directory 
 
 
 ```r
@@ -61,7 +28,7 @@ my.path <- dirname(rstudioapi::getActiveDocumentContext()$path)
 setwd(my.path)
 ```
 
-## Load and install necessary Packages {-} 
+## Load and install necessary Packages  
 
 
 
@@ -99,7 +66,7 @@ setwd(my.path)
 ```
 
 
-# Basic pipeline {#pipeVI}
+# Basic pipeline
 
 ## Setting the work directories
 | A example soybean files will be used to perform this introduction pipeline. As reference see [Volpato et al. 2021](G:\Shared drives\Bean_Lab\Volpato\R_script\Example_drone_data_soy)
@@ -405,7 +372,7 @@ fieldPlot(fieldShape=ortho.Info1$fieldShape,fieldAttribute="GLI", mosaic=Veg.Ind
 
 ---------------------------------------------
 
-## Getting started - Complete data set{#startdata}
+## Getting started - Complete data set
 
 This code will run across of 4 type of loops:
 * Flgith date (orthomosaic) **i**
@@ -557,7 +524,7 @@ getDoParWorkers()
 ```
 
 
-## Running the loops{#Runloop}
+## Running the loops
 
 - This loop can take up to 5* min to complete
 - * See the computer resources restrictions
@@ -642,7 +609,7 @@ parallel::stopCluster(cl) # Stopping the parallel function
 
 
 
-## Adjusting the results and saving{#savingdata}
+## Adjusting the results and saving
 
 
 ```r

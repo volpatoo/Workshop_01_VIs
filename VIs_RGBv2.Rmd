@@ -1,24 +1,57 @@
+---
+title: "Vegetation index (VI) extractions using RGB orthomosaic images"
+author: "Leonardo Volpato"
+date: "Last compiled on `r format(Sys.time(), '%d %B, %Y')`"
+output:
+  html_document:
+    keep_md: yes
+    number_sections: true
+    theme: cerulean
+    highlight: pygments
+    toc: yes
+    toc_depth: 3
+    toc_float: yes
+    number_sections: yes
+    df_print: kable
+    code_folding: hide
+    code_download: yes
+  rmarkdown::html_vignette:
+    toc: yes
+    toc_depth: 3
+  pdf_document:
+    toc: yes
+    number_sections: yes
+    toc_depth: '4'
+    latex_engine: xelatex
+fig_caption: yes
+link-citations: true
+#classoption: a4paper
+---
 
-## Vegetation index (VI) extractions using RGB orthomosaic images</p></p>
-Author: Leonardo Volpato</p>
-Date: Last compiled on 19 December, 2022</p>
+```{r global_options, include = FALSE}
+knitr::opts_chunk$set(comment = "#>", 
+                      collapse = TRUE,
+                      echo = TRUE,
+                    	message = FALSE,
+                    	warning = FALSE,
+                      fig.dim = c(9, 5)
+)
+op <- options(width = 90)
+options(tinytex.verbose = TRUE)
+```
 
----------------------------------------------
 
-### About this analysis 
 
-The present analysis aims to perform the VIs extractions from the RGB images aka orthomosaic. </p>
-Data source: Dry Beans Breeding Program - MSU. </p>
+# About this analysis {-}
+
+The present analysis aims to perform the VIs extractions from the RGB images aka orthomosaic.\n
+Data source: Dry Beans Breeding Program - MSU. \n
 Principal Investigator: [Dr. Francisco Gomez](https://www.canr.msu.edu/people/francisco-gomez) 
 
 
-<p align="center">
-    <img src="https://raw.githubusercontent.com/volpatoo/images/master/readme/Pipeline_RGB_VIs2.jpg" width="100%" height="100%">
-</p>
-
 ---------------------------------------------
 
-## Resources
+## Resources{-}
 
 * [Basic pipeline](#pipeVI)
 * [Getting started - Complete data set](#startdata)
@@ -29,7 +62,7 @@ Principal Investigator: [Dr. Francisco Gomez](https://www.canr.msu.edu/people/fr
 ---------------------------------------------
 
 
-## Setting up the working directory
+## Setting up the working directory {-} 
 
 ```{r}
 rm(list=ls())
@@ -37,9 +70,9 @@ my.path <- dirname(rstudioapi::getActiveDocumentContext()$path)
 setwd(my.path)
 ```
 
-## Load and install necessary Packages
+## Load and install necessary Packages {-} 
 
-```{r message=TRUE, warning=FALSE, results='asis',echo = F}
+```{r message=FALSE, warning=FALSE, results='asis',echo = F}
 library("sp")
 library("sf")
 library("raster")
@@ -110,7 +143,7 @@ library("tidyr")
 ```
 
 
-# Basic pipeline
+# Basic pipeline {#pipeVI}
 
 ## Setting the work directories
 | A example soybean files will be used to perform this introduction pipeline. As reference see [Volpato et al. 2021](G:\Shared drives\Bean_Lab\Volpato\R_script\Example_drone_data_soy)
@@ -135,13 +168,10 @@ folder_shp <- "./Shapefile"
 ```{r}
 imgFiles <-list.files(path = dir_ortho, pattern="*.tif$",full.names = T) #get the Orthosaics. 
 imgFiles #Files that their name ends in group1.tif (Change all file names to otimization)
-#> [1] "G:\\Shared drives\\Bean_Lab\\Volpato\\R_script\\Example_drone_data_soy/WA_2018_08_15.tif"
-#> [2] "G:\\Shared drives\\Bean_Lab\\Volpato\\R_script\\Example_drone_data_soy/WA_2018_08_23.tif"
 
 imgFiles_name <-list.files(path = dir_ortho, pattern="*.tif$") # Aux file names
 imgFiles_name <- gsub(".tif", "", imgFiles_name, ignore.case = FALSE, perl = FALSE, fixed = TRUE, useBytes = FALSE) # Removing the extension
 imgFiles_name
-#> [1] "WA_2018_08_15" "WA_2018_08_23"
 ```
 
 
@@ -153,14 +183,10 @@ layer_prefix_shp <- "Export_Output" # name with the .shp extension
 ## Read the plots Shapefile
 #indPlots <- readOGR(dsn = folder_shp, layer = layer_prefix_shp)
 indPlots <- vect( folder_shp, layer = layer_prefix_shp)
-#> OGR data source with driver: ESRI Shapefile 
-#> Source: "G:\Shared drives\Bean_Lab\Volpato\R_script\Example_drone_data_soy", layer: "Export_Output"
-#> with 48 features
-#> It has 9 fields
+
 ## Polygon plot ID list from the shapefiles
 names(indPlots)
-#> [1] "Range2"     "Row2"       "Test"       "Entry"      "MNPlot"     "RM"        
-#> [7] "RM_list"    "RepNo"      "MaturityDa"
+
 ```
 
 ## Getting the RGB bands
@@ -169,14 +195,7 @@ names(indPlots)
 #img_ortho <- imgFiles[1]
 img.rgb.1 <- rast(imgFiles[1])
 img.rgb.1
-#> class      : RasterStack 
-#> dimensions : 1582, 836, 1322552, 4  (nrow, ncol, ncell, nlayers)
-#> resolution : 0.02535, 0.02535  (x, y)
-#> extent     : 457926.1, 457947.2, 4880222, 4880262  (xmin, xmax, ymin, ymax)
-#> crs        : +proj=utm +zone=15 +datum=WGS84 +units=m +no_defs 
-#> names      : WA_2018_08_15.1, WA_2018_08_15.2, WA_2018_08_15.3, WA_2018_08_15.4 
-#> min values :              36,              40,               1,             255 
-#> max values :             254,             252,             225,             255
+
 ```
 
 ## Ploting the field maps and shapefile
@@ -210,7 +229,7 @@ plotRGB(plot_crop_idx_1)
 
 ```{r}
 img.index <- fieldIndex(mosaic = plot_crop_idx_1, index = c("BI", "GLI", "HI", "NGRDI", "BGI", "VARI", "SCI")) 
-#> [1] "4 layers available"
+
 ```
 
 
@@ -228,27 +247,27 @@ plot(img.index$NGRDI)
 
 ```{r}
 EX.Mask1 <- fieldMask(mosaic = plot_crop_idx_1, index = "NGRDI", cropValue = 0.05, cropAbove = F)
-#> [1] "4 layers available"
+
 ```
 
 
 ```{r}
 
 EX.Mask3 <- fieldMask(mosaic = plot_crop_idx_1, index = "HI", cropValue = 0.6, cropAbove = T) #all values above the cropValue will be accounted to make the mask.
-#> [1] "4 layers available"
+
 ```
 
 
 ```{r}
 
 EX.Mask4 <- fieldMask(mosaic = plot_crop_idx_1, index = "HI", cropValue = 0.8, cropAbove = T)
-#> [1] "4 layers available"
+
 ```
 
 
 ```{r}
 EX.Mask5 <- fieldMask(mosaic = plot_crop_idx_1, index = "HI", cropValue = 0.6, cropAbove = T) ## This model will be select to perform the analysis
-#> [1] "4 layers available"
+
 ```
 
 
@@ -258,7 +277,7 @@ EX.Mask5 <- fieldMask(mosaic = plot_crop_idx_1, index = "HI", cropValue = 0.6, c
 ```{r}
 #Investigating the raw image plot
 img.index.hi <- fieldIndex(mosaic = plot_crop_idx_1, index = c("HI") )
-#> [1] "4 layers available"
+
 ```
 
 
@@ -272,7 +291,7 @@ hist(img.index.hi$HI) # Image segmentation start from 0.7 (soil and plants)
 
 #Investigating the clean image plot
 img.index.hi.clean <- fieldIndex(mosaic = EX.Mask5$newMosaic, index = c("HI") )
-#> [1] "4 layers available"
+
 ```
 
 
@@ -286,7 +305,7 @@ hist(img.index.hi.clean$HI) # Image segmentation start from 0.7 (soil and plants
 
 ```{r}
 ortho.index.hi.clean<- fieldIndex(mosaic = img.rgb.1, index = c("HI"))
-#> [1] "4 layers available"
+
 ```
 
 
@@ -295,7 +314,7 @@ ortho.index.hi.clean<- fieldIndex(mosaic = img.rgb.1, index = c("HI"))
 
 ortho.HI.RemSoil<- fieldMask(mosaic = img.rgb.1, Red = 1, Green = 2, Blue = 3, 
                    index = "HI", cropValue = 0.7, cropAbove = T) 
-#> [1] "4 layers available"
+
 ```
 
 
@@ -307,7 +326,7 @@ ortho.HI.RemSoil<- fieldMask(mosaic = img.rgb.1, Red = 1, Green = 2, Blue = 3,
 ##Selection the VI from the clean orthomosaic
 Veg.Indices<-fieldIndex(mosaic = ortho.HI.RemSoil$newMosaic,
                         index=c("GLI"))
-#> [1] "4 layers available"
+
 ```
 
 
@@ -325,8 +344,6 @@ projection(indPlots)<-projection(Veg.Indices) ##Makes coordinate system of .tif 
 ortho.Info1<-fieldInfo(mosaic=Veg.Indices,
                      fieldShape=indPlots,
                      n.core=10) ## Extracts all vegetation indices (layers) for each .shp file
-#> [1] "Extracting: 5 layers."
-#> [1] "You can speed up this step using n.core=12 or less."
 
 VI_data<- dplyr::as_tibble(ortho.Info1$fieldShape@data)
 
@@ -336,7 +353,7 @@ hist(ortho.Info1$fieldShape$GLI)
 ```
 
 
-
+## Graphic visualization of trait values for each plot using the fieldShape file and the orthomosaic
 
 ```{r}
 #names(indPlots)
@@ -350,7 +367,7 @@ fieldPlot(fieldShape=ortho.Info1$fieldShape,fieldAttribute="GLI", mosaic=Veg.Ind
 
 ---------------------------------------------
 
-# Getting started - Complete data set
+## Getting started - Complete data set{#startdata}
 
 This code will run across of 4 type of loops:
 * Flgith date (orthomosaic) **i**
@@ -392,13 +409,11 @@ folder_shp <- "./Shapefile"
 ```{r}
 imgFiles <-list.files(path = dir_ortho, pattern="*.tif$",full.names = T) #get the Orthosaics. 
 imgFiles #Files that their name ends in group1.tif (Change all file names to otimization)
-#> [1] "G:\\Shared drives\\Bean_Lab\\Volpato\\R_script\\Example_drone_data_soy/WA_2018_08_15.tif"
-#> [2] "G:\\Shared drives\\Bean_Lab\\Volpato\\R_script\\Example_drone_data_soy/WA_2018_08_23.tif"
 
 imgFiles_name <-list.files(path = dir_ortho, pattern="*.tif$") # Aux file names
 imgFiles_name <- gsub(".tif", "", imgFiles_name, ignore.case = FALSE, perl = FALSE, fixed = TRUE, useBytes = FALSE) # Removing the extension
 imgFiles_name
-#> [1] "WA_2018_08_15" "WA_2018_08_23"
+
 ```
 
 
@@ -410,27 +425,14 @@ layer_prefix_shp <- "Export_Output" # name with the .shp extension
 ## Read the plots Shapefile
 #indPlots <- readOGR(dsn = folder_shp, layer = layer_prefix_shp)
 indPlots <- readOGR( folder_shp, layer = layer_prefix_shp)
-#> OGR data source with driver: ESRI Shapefile 
-#> Source: "G:\Shared drives\Bean_Lab\Volpato\R_script\Example_drone_data_soy", layer: "Export_Output"
-#> with 48 features
-#> It has 9 fields
+
 ## Polygon plot ID list from the shapefiles
 names(indPlots)
-#> [1] "Range2"     "Row2"       "Test"       "Entry"      "MNPlot"     "RM"        
-#> [7] "RM_list"    "RepNo"      "MaturityDa"
-
 
 # Subsetting plots to speed up the loop
 indPlots<- indPlots[1:5,"MNPlot"]
 indPlots
-#> class       : SpatialPolygonsDataFrame 
-#> features    : 5 
-#> extent      : 457931.5, 457944.5, 4880257, 4880261  (xmin, xmax, ymin, ymax)
-#> crs         : +proj=utm +zone=15 +datum=WGS84 +units=m +no_defs 
-#> variables   : 1
-#> names       : MNPlot 
-#> min values  : 264001 
-#> max values  : 264033
+
 ```
 
 # Setting the parameters from the loop
@@ -441,14 +443,7 @@ indPlots
 ## Data frame with plot names
 Plot_ID<- as.data.frame(indPlots[,"MNPlot"])
 indPlots # Plot identification propose
-#> class       : SpatialPolygonsDataFrame 
-#> features    : 5 
-#> extent      : 457931.5, 457944.5, 4880257, 4880261  (xmin, xmax, ymin, ymax)
-#> crs         : +proj=utm +zone=15 +datum=WGS84 +units=m +no_defs 
-#> variables   : 1
-#> names       : MNPlot 
-#> min values  : 264001 
-#> max values  : 264033
+
 ```
 
 ## VIs list
@@ -466,7 +461,7 @@ myIndex_list_name<- myIndex_list_name
 ## Functions of extractions
 
 ```{r}
-func_list<- c('mean', 'median','sd')
+func_list<- c('mean', 'median') # "sd
 # There are many other functions (SD, VAR, Quantiles, etc)
 ```
 
@@ -477,9 +472,6 @@ Please, take your time and study how this function works and if this function is
 
 ```{r}
 gc() #Cleaning unusual memmory
-#>           used  (Mb) gc trigger  (Mb) max used  (Mb)
-#> Ncells 4656148 248.7    8556108 457.0  6793720 362.9
-#> Vcells 6972624  53.2   27730724 211.6 54136618 413.1
 
 # Number of cores
 n.core<-detectCores() # or detectCores()
@@ -488,14 +480,15 @@ n.core<-detectCores() # or detectCores()
 cl <- makeCluster(n.core, output = "")
 registerDoParallel(cl)
 getDoParWorkers()
-#> [1] 12
+
 ```
 
 
-## Running the loops
+## Running the loops{#Runloop}
 
 - This loop can take up to 5* min to complete
 - * See the computer resources restrictions
+
 ```{r}
 ## Using the code inside the system time to get the total time used.
 system.time(
@@ -564,8 +557,6 @@ system.time(
         if(i==1){results.3<-results.2}else{results.3<-rbind(results.3, results.2)}
     
   })
-#>    user  system elapsed 
-#>    2.48    0.42  307.19
 
 parallel::stopCluster(cl) # Stopping the parallel function
 
@@ -575,46 +566,16 @@ parallel::stopCluster(cl) # Stopping the parallel function
 
 
 
-## Adjusting the results and saving
+## Adjusting the results and saving{#savingdata}
 
 ```{r}
 as_tibble(results.3) # Saving into a table
-#> # A tibble: 760 x 5
-#>       ID myIndex Func   VIs       imgFiles_name
-#>    <int>   <dbl> <chr>  <list>    <chr>        
-#>  1     1    115. mean   <chr [1]> WA_2018_08_15
-#>  2     2    118. mean   <chr [1]> WA_2018_08_15
-#>  3     3    119. mean   <chr [1]> WA_2018_08_15
-#>  4     4    120. mean   <chr [1]> WA_2018_08_15
-#>  5     5    134. mean   <chr [1]> WA_2018_08_15
-#>  6     1    114. median <chr [1]> WA_2018_08_15
-#>  7     2    116. median <chr [1]> WA_2018_08_15
-#>  8     3    118. median <chr [1]> WA_2018_08_15
-#>  9     4    120. median <chr [1]> WA_2018_08_15
-#> 10     5    134. median <chr [1]> WA_2018_08_15
-#> # ... with 750 more rows
 
 # Adjusting the data for VIs and Func columns
 results.final<-tidyr::pivot_wider(results.3, names_from   = c("VIs", "Func"),
                            values_from = "myIndex")
 
 head(results.final)
-#> # A tibble: 6 x 78
-#>      ID imgFiles_name BI_mean BI_median BIM_mean BIM_median SCI_mean SCI_median GLI_mean
-#>   <int> <chr>           <dbl>     <dbl>    <dbl>      <dbl>    <dbl>      <dbl>    <dbl>
-#> 1     1 WA_2018_08_15    115.      114.     14.8       14.8  -0.0705    -0.0758    0.200
-#> 2     2 WA_2018_08_15    118.      116.     15.0       14.9  -0.0606    -0.0671    0.190
-#> 3     3 WA_2018_08_15    119.      118.     15.1       15.1  -0.0503    -0.0554    0.179
-#> 4     4 WA_2018_08_15    120.      120.     15.2       15.2  -0.0517    -0.0576    0.172
-#> 5     5 WA_2018_08_15    134.      134.     16.2       16.2  -0.0197    -0.0175    0.130
-#> 6     1 WA_2018_08_23    120.      119.     15.2       15.2  -0.0564    -0.0580    0.173
-#> # ... with 69 more variables: GLI_median <dbl>, HI_mean <dbl>, HI_median <dbl>,
-#> #   NGRDI_mean <dbl>, NGRDI_median <dbl>, SI_mean <dbl>, SI_median <dbl>,
-#> #   VARI_mean <dbl>, VARI_median <dbl>, HUE_mean <dbl>, HUE_median <dbl>,
-#> #   BdivG_mean <dbl>, BdivG_median <dbl>, BCC_mean <dbl>, BCC_median <dbl>,
-#> #   CIVE_mean <dbl>, CIVE_median <dbl>, COM1_mean <dbl>, COM1_median <dbl>,
-#> #   COM2_mean <dbl>, COM2_median <dbl>, ExG_mean <dbl>, ExG_median <dbl>,
-#> #   ExG2_mean <dbl>, ExG2_median <dbl>, ExGR_mean <dbl>, ExGR_median <dbl>, ...
 
 # Saving
 write.csv(results.final, "test01_MRF_RGB.csv", quote = F, row.names = F)

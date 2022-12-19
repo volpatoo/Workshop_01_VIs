@@ -343,8 +343,7 @@ projection(indPlots)<-projection(Veg.Indices) ##Makes coordinate system of .tif 
 
 
 ortho.Info1<-fieldInfo(mosaic=Veg.Indices,
-                     fieldShape=indPlots,
-                     n.core=4) ## Extracts all vegetation indices (layers) for each .shp file
+                     fieldShape=indPlots) ## Extracts all vegetation indices (layers) for each .shp file
 
 VI_data<- dplyr::as_tibble(ortho.Info1$fieldShape@data)
 
@@ -387,6 +386,7 @@ This code will run across of 4 type of loops:
 rm(list=ls())
 my.path <- dirname(rstudioapi::getActiveDocumentContext()$path)
 setwd(my.path)
+gc()
 ```
 
 # Setting the work directories

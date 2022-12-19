@@ -456,7 +456,8 @@ source("VIs_RGB-aux.R")
 
 #Reading 38 VIs from RGB image
 myIndex_list<- myIndex_list
-myIndex_list_name<- myIndex_list_name
+#myIndex_list_name<- myIndex_list_name
+myIndex_list_name<- list("BI","BIM")
 ```
 
 ## Functions of extractions
@@ -478,7 +479,7 @@ gc() #Cleaning unusual memmory
 n.core<-detectCores() # or detectCores()
 
 # Starting parallel
-cl <- makeCluster(n.core, output = "")
+cl <- makeCluster(n.core -3, output = "")
 registerDoParallel(cl)
 getDoParWorkers()
 

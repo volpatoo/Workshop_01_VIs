@@ -38,6 +38,7 @@ knitr::opts_chunk$set(comment = "#>",
 )
 op <- options(width = 90)
 options(tinytex.verbose = TRUE)
+
 ```
 
 

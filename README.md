@@ -21,7 +21,8 @@ Principal Investigator: [Dr. Francisco Gomez](https://www.canr.msu.edu/people/fr
 > 
 > Launch the Binder button below to open a virtual RStudio (running this tutorial online):
 > 
-[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/volpatoo/Workshop_01_VIs/HEAD?urlpath=rstudio)
+[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/volpatoo/Workshop_01_VIs/main?urlpath=rstudio)
+
 </p>
 
 

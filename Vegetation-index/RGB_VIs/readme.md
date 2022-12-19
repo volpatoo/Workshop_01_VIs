@@ -83,10 +83,12 @@ setwd(my.path)
 
 <div id="pipe" />
 ---------------------------------------------
+
 # Basic pipeline
 
 ## Setting the work directories
-| A example soybean files will be used to perform this introduction pipeline. As reference see [Volpato et al. 2021](G:\Shared drives\Bean_Lab\Volpato\R_script\Example_drone_data_soy)
+
+> A example soybean files will be used to perform this introduction pipeline. As reference see [Volpato et al. 2021](G:\Shared drives\Bean_Lab\Volpato\R_script\Example_drone_data_soy)
 * The example data contain: 2 orthomosaic and a shapefile with 48 plots in total.
 
 ### Folder directory containing the orthomosaics
@@ -386,7 +388,7 @@ fieldPlot(fieldShape=ortho.Info1$fieldShape,fieldAttribute="GLI", mosaic=Veg.Ind
 
 ![](VIs_RGBv2_files/figure-html/unnamed-chunk-27-2.png)<!-- -->
 
-
+[Menu](#menu)
 ---------------------------------------------
 
 <div id="start" />
@@ -543,6 +545,8 @@ getDoParWorkers()
 #> [1] 12
 ```
 
+[Menu](#menu)
+
 <div id="loops" />
 ---------------------------------------------
 
@@ -628,7 +632,7 @@ parallel::stopCluster(cl) # Stopping the parallel function
 
 ###### the end ###########
 ```
-
+[Menu](#menu)
 
 <div id="adj" />
 ---------------------------------------------
@@ -1406,6 +1410,8 @@ as_tibble(results.3) # Saving into a table
 
 </div>
 
+[Menu](#menu)
+
 ```r
 
 # Adjusting the data for VIs and Func columns
@@ -1434,7 +1440,7 @@ head(results.final)
 write.csv(results.final, "test01_MRF_RGB.csv", quote = F, row.names = F)
 ```
 
-
+[Menu](#menu)
 ---------------------------------------------
 
 

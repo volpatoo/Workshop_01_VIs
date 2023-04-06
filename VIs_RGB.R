@@ -168,7 +168,7 @@ fieldPlot(fieldShape=ortho.Info1$fieldShape,fieldAttribute="MaturityDa", mosaic=
 fieldPlot(fieldShape=ortho.Info1$fieldShape,fieldAttribute="GLI", mosaic=Veg.Indices, color=c("red","blue"), alpha = 0.5)
 
 
----------------------------------------------
+##---------------------------------------------
   
   ## Getting started - Complete data set
   
@@ -248,7 +248,7 @@ gc() #Cleaning unusual memmory
 
 # Number of cores
 n.core<-detectCores() # or detectCores()
-
+n.core<-1 #Binder allow only 1 core, but more is recommended if you are using on-site. 
 # Starting parallel
 cl <- makeCluster(n.core, output = "")
 registerDoParallel(cl)

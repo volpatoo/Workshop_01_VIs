@@ -36,3 +36,4 @@ Contributors: [Dr. Francisco Gomez](https://www.canr.msu.edu/people/francisco-go
 ## References:
 * [FIELDimageR](https://github.com/OpenDroneMap/FIELDimageR)
 * Matias FI, Caraza-Harter MV, Endelman JB. FIELDimageR: An R package to analyze orthomosaic images from agricultural field trials. The Plant Phenome J. 2020; https://doi.org/10.1002/ppj2.20005
+* Volpato, L., Dobbels, A., Borem, A., & Lorenz, A. J. (2021). Optimization of temporal UAS-based imagery analysis to estimate plant maturity date for soybean breeding. The Plant Phenome Journal, 4(1), e20018. https://doi.org/10.1002/ppj2.20018

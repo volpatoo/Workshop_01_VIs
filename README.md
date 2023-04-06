@@ -6,7 +6,7 @@
 
 The present analysis aims to perform the VIs extractions from the RGB images aka orthomosaic. </p>
 Data source: Dry Beans Breeding Program - MSU. </p>
-Principal Investigator: [Dr. Francisco Gomez](https://www.canr.msu.edu/people/francisco-gomez) 
+Contributors: [Dr. Francisco Gomez](https://www.canr.msu.edu/people/francisco-gomez) 
 
 <p align="center">
     <img src="https://github.com/volpatoo/Workshop_01_VIs/blob/c6f6f5fcf3163c22a9ea1749fb4592c9636e89dd/Pipeline_RGB_VIs2.jpg" width="100%" height="100%">

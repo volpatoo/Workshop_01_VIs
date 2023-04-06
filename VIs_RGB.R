@@ -144,7 +144,7 @@ Veg.Indices<-fieldIndex(mosaic = ortho.HI.RemSoil$newMosaic,
                         index=c("GLI"))
 
 ## Conf. the CRS projections
-projection(indPlots)<-projection(Veg.Indices) ##Makes coordinate system of .tif with indices and without soil and .shp the same
+proj4string(indPlots) <- proj4string(Veg.Indices) ##Makes coordinate system of .tif with indices and without soil and .shp the same
 
 ortho.Info1<-fieldInfo(mosaic=Veg.Indices,
                        fieldShape=indPlots,

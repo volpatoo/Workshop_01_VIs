@@ -96,13 +96,13 @@ system.time(
     imageMulti.blue <- imageMulti[[1]]
     imageMulti.gree <- imageMulti[[2]]
     imageMulti.nir <- imageMulti[[3]]
-    imageMulti.edge <- imageMulti[[4]]
-    imageMulti.red <- imageMulti[[5]]
+    imageMulti.rededge <- imageMulti[[5]]
+    imageMulti.red <- imageMulti[[4]]
     
     i.h <- stack(imageMulti.blue,
                  imageMulti.gree,
                  imageMulti.nir,
-                 imageMulti.edge,
+                 imageMulti.rededge,
                  imageMulti.red)
     
     for(v in 1:length(myIndex_list_MS)){ 
@@ -159,13 +159,14 @@ system.time(
       if(v==1){results.2<-results.1}else{results.2<-rbind(results.2, results.1)}
       
     }
-    results.2$imgFiles_name<-imageMulti_names_list[i]
+    results.2$imgFiles_name<-imageMulti_names_list[j+1] 
     
-    if(k==5){results.3<-results.2}else{results.3<-rbind(results.3, results.2)}
+    if(i==1){results.3<-results.2}else{results.3<-rbind(results.3, results.2)}
     
   })
 
 parallel::stopCluster(cl)
+
 
 as_tibble(results.3)
 

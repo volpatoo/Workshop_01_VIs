@@ -37,8 +37,8 @@ pacman::p_load(FIELDimageR,
 
 
 ####Change it###
-dir_multispec <- "C:\\Users\\volpato1\\Michigan State University\\MSU Dry Bean Breeding Lab - General\\UAS_Beans\\2021\\MRC\\MS_reflectance"
-folder_shp <- "C:\\Users\\volpato1\\Michigan State University\\MSU Dry Bean Breeding Lab - General\\UAS_Beans\\2021\\MRC\\Data_VIs\\Shapefile"
+dir_multispec <- "C:\\temp_vi\\Sample_MS"
+folder_shp <- "C:\\temp_vi\\Sample_MS\\Shp"
 layer_prefix_shp <- "Shapefile_MRC_02"
 ###Get all the files to process from the WD
 imgFiles <-list.files(path = dir_multispec, pattern="*.tif$",full.names = T) #get the Orthosaics. Files that their name ends in group1.tif (Change all file names to otimization)
@@ -82,28 +82,28 @@ k=5
 system.time(
   
   for(i in 1:(length(imgFiles_name)/5)){
-      
-      if(i == 1) {
-        j = j+0 }
-      else {
-        j = j +5
-      }   
     
-      message("Stacking relectance images from: ", imageMulti_levels[i],"_MRC_MS")
-      imageMulti <- imgFiles[(j+1):(i*k)]
-      
+    if(i == 1) {
+      j = j+0 }
+    else {
+      j = j +5
+    }   
+    
+    message("Stacking relectance images from: ", imageMulti_levels[i],"_MRC_MS")
+    imageMulti <- imgFiles[(j+1):(i*k)]
+    
     #i.h<-aggregate(stack(imgFiles[i]), fact=aggregateCells) 
-      imageMulti.blue <- imageMulti[[1]]
-      imageMulti.gree <- imageMulti[[2]]
-      imageMulti.nir <- imageMulti[[3]]
-      imageMulti.edge <- imageMulti[[4]]
-      imageMulti.red <- imageMulti[[5]]
-      
-      i.h <- stack(imageMulti.blue,
-                       imageMulti.gree,
-                       imageMulti.nir,
-                       imageMulti.edge,
-                       imageMulti.red)
+    imageMulti.blue <- imageMulti[[1]]
+    imageMulti.gree <- imageMulti[[2]]
+    imageMulti.nir <- imageMulti[[3]]
+    imageMulti.edge <- imageMulti[[4]]
+    imageMulti.red <- imageMulti[[5]]
+    
+    i.h <- stack(imageMulti.blue,
+                 imageMulti.gree,
+                 imageMulti.nir,
+                 imageMulti.edge,
+                 imageMulti.red)
     
     for(v in 1:length(myIndex_list_MS)){ 
       
@@ -116,29 +116,28 @@ system.time(
         results<- foreach(i = 1:length(indPlots), 
                           .packages = c("raster", "FIELDimageR", "plyr", "dplyr"), 
                           .combine = rbind) %dopar% {
-                            i=1
                             h.c <-  crop(i.h, extent(indPlots[i,]))
                             m.h <-  fieldMask(mosaic=h.c, #i.h@layers
-                                                  Red=5,
-                                                  Green=2,
-                                                  Blue=1,
-                                                  RedEdge = 4, 
-                                                  NIR = 3,
-                                                  index="NDVI",
-                                                  cropValue=0.7, 
-                                                  cropAbove=F, ## Removes any instance of soil from tif file
-                                                  plot = F) 
+                                              Red=5,
+                                              Green=2,
+                                              Blue=1,
+                                              RedEdge = 4, 
+                                              NIR = 3,
+                                              index="NDVI",
+                                              cropValue=0.7, 
+                                              cropAbove=F, ## Removes any instance of soil from tif file
+                                              plot = F) 
                             # stackMS@layers
                             Veg.Indices<-fieldIndex(mosaic = m.h$newMosaic, 
                                                     Red=5,Green=2,Blue=1,RedEdge=4,NIR=3,
                                                     index = myIndex_list_MS[v],
                                                     plot = FALSE)
                             
-                           # projection(indPlots)<-projection(Veg.Indices)
-                         
+                            # projection(indPlots)<-projection(Veg.Indices)
                             
-                              raster::extract(x = Veg.Indices[[6]], y = indPlots[i,], fun = eval(parse(text = func_list[f])),  
-                                              buffer = buffer, na.rm = T, df = T)
+                            
+                            raster::extract(x = Veg.Indices[[6]], y = indPlots[i,], fun = eval(parse(text = func_list[f])),  
+                                            buffer = buffer, na.rm = T, df = T)
                             
                             
                             
@@ -147,8 +146,10 @@ system.time(
         results$Func<-func_list[f]
         
         results$Plot_ID <- 1:length(indPlots)
+        colnames(results) <- c("ID","value","Func","Plot_ID")
         
         if(f==1){results.1<-results}else{results.1<-rbind(results.1, results)}
+
         
       }
       
@@ -158,9 +159,9 @@ system.time(
       if(v==1){results.2<-results.1}else{results.2<-rbind(results.2, results.1)}
       
     }
-    results.2$imgFiles_name<-imgFiles_name[i]
+    results.2$imgFiles_name<-imageMulti_names_list[i]
     
-    if(k==1){results.3<-results.2}else{results.3<-rbind(results.3, results.2)}
+    if(k==5){results.3<-results.2}else{results.3<-rbind(results.3, results.2)}
     
   })
 
@@ -169,12 +170,12 @@ parallel::stopCluster(cl)
 as_tibble(results.3)
 
 results.final<-pivot_wider(results.3, names_from   = c("VIs", "Func"),
-                           values_from = "myIndex")
+                           values_from = "value")
 
 head(results.final)
 
 # saving
-write.csv(results.final, "RGB_VIs_MRC_2021_VD.csv", quote = F, row.names = F)
+write.csv(results.final, "RGB_VIs_MRC_2021_test_R.csv", quote = F, row.names = F)
 
 
 ```
